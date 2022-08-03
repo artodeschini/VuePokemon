@@ -2,10 +2,10 @@
   <div id="app">
     <div class="column is-half is-offset-one-quarter">
       <img src="./assets/logo_pokemon.png" alt="logo pokemon" />
-      <h4 class="is size-1">Pokedex da Manu</h4>
-      <input class="input is-rounded" type="text" placeholder="Buscar Pokemon pelo Nome" v-model="busca" />
-      <button id="btn_busca" class="button is-medium is-warning">Buscar</button>
-      <div v-for="(poke, index) in pokemons" :key="index">
+      <h4 class="is size-1">Pokedex Sample with Vue</h4>
+      <input class="input is-rounded" type="text" placeholder="Buscar Pokemon pelo Nome" v-model="filtro" />
+      <button id="btn_busca" class="button is-medium is-warning" @click="buscar">Buscar</button>
+      <div v-for="(poke, index) in pokemonsFiltrados" :key="poke.url">
         <Pokemon :name="poke.name" :url="poke.url" :num="index + 1" />
       </div>
     </div>
@@ -20,8 +20,9 @@ export default {
   name: 'App',
   data() {
     return {
-      busca: '',
-      pokemons: []
+      filtro: '',
+      pokemons: [],
+      pokemonsFiltrados: []
     }
   },
   created: function() {
@@ -29,19 +30,39 @@ export default {
       console.log("pegando a lista de pokemons");
       this.pokemons = res.data.results;
       // console.log(this.pokemons);
+      this.pokemonsFiltrados = this.pokemons;
 
     });
   },
   computed: {
-      resultadoBusca: function() {
-        if (this.busca == '' || this.busca == ' ') {
-          return this.pokemons;
-        }
-        return this.pokemons.filter(pokemon => pokemon.nome == this.busca);
-      }
+      // resultadoBusca: function() {
+      //   if (this.busca == '' || this.busca == ' ') {
+      //     return this.pokemons;
+      //   }
+      //   return this.pokemons.filter(pokemon => pokemon.nome == this.busca);
+      // }
     }, 
   components: {
     Pokemon
+  },
+  methods: {
+    buscar: function() {
+      this.pokemonsFiltrados = this.pokemons;
+      //console.log('em buscar');
+      //console.log(this.pokemons);
+
+      if (this.filtro == '' || this.filtro == ' ') {
+        this.pokemonsFiltrados = this.pokemons;
+      } else {
+        //console.log('else de buscar');
+        //console.log(this.filtro);
+        var temp = this.filtro.toLowerCase();
+        this.pokemonsFiltrados = this.pokemons.filter(function (p) {
+          console.log(p.name);
+          return p.name.toLowerCase().indexOf(temp) != -1;
+        });
+      }
+    }
   }
 }
 </script>

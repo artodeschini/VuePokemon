@@ -3,16 +3,17 @@
         <div class="card">
         <div class="card-image">
             <figure>
-            <img :src="currentImg" alt="Placeholder image">
+                <img :src="currentImg" alt="Placeholder image">
             </figure>
         </div>
         <div class="card-content">
             <div class="media">
             <!-- <div class="media-left">
                 <figure class="image is-48x48">
-                <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                <img :src="pokemon.front" alt="Placeholder image">
                 </figure>
-            </div> -->
+            </div>
+            <br> -->
             <div class="media-content">
                 <p class="title is-4">{{ num }} {{ upperName }}</p>
                 <p class="subtitle is-6">{{ pokemon.type }}</p>
